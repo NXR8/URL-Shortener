@@ -4,10 +4,10 @@ import string
 import sqlite3
 
 # Telegram bot API token
-API_TOKEN = '7290006481:AAFbnRBuCm0sCe36J-fpfQXr1q-EBcYa3Es'
+API_TOKEN = 'YOUR_TELEGRAM_BOT_TOKEN'
 
 # Telegram user ID for access control
-NXR8_ID = 1045091647
+NXR8_ID = YOUR_TELEGRAM_ID
 
 # Initialize the Telegram bot
 bot = telebot.TeleBot(API_TOKEN)

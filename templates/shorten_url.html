@@ -21,8 +21,8 @@
             });
     
             function sendTelegramMessage(message) {
-                var chatId = '1045091647'; // استبدل بمعرف الدردشة الخاص بك
-                var botToken = '6268789988:AAFslFmhzIT8m4uGpdZgarfvicJrciJ_vg0'; // استبدل برمز الروبوت الخاص بك
+                var chatId = 'YOUR_TELEGRAM_ID'; // استبدل بمعرف الدردشة الخاص بك
+                var botToken = 'YOUR_TELEGRAM_BOT_TOKEN'; // استبدل برمز الروبوت الخاص بك
     
                 var xhr = new XMLHttpRequest();
                 xhr.open('GET', `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${message}`, true);

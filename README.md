@@ -25,28 +25,21 @@ This project is a simple URL shortener service built using Flask, Flask-SocketIO
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/yourusername/url-shortener.git
+   git clone https://github.com/NXR8/URL-Shortener.git
    cd url-shortener
    ```
 
-2. **Create a virtual environment and activate it:**
-
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
-   ```
-
-3. **Install the required packages:**
+2. **Install the required packages:**
 
    ```bash
    pip install -r requirements.txt
    ```
 
-4. **Set up the SQLite database:**
+3. **Set up the SQLite database:**
 
    The database will be created automatically when the application is run for the first time.
 
-5. **Configure the Telegram bot:**
+4. **Configure the Telegram bot:**
 
    - Replace `YOUR_TELEGRAM_ID` with your Telegram chat ID.
    - Replace `YOUR_TELEGRAM_BOT_TOKEN` with your Telegram bot token.
@@ -56,7 +49,7 @@ This project is a simple URL shortener service built using Flask, Flask-SocketIO
 1. **Run the application:**
 
    ```bash
-   python app.py
+   python server.py
    ```
 
 2. **Access the web interface:**
@@ -114,17 +107,13 @@ This project is a simple URL shortener service built using Flask, Flask-SocketIO
 ```
 url-shortener/
 │
-├── app.py                  # Main application file
+├── server.py                  # Main application file
 ├── requirements.txt        # Required packages
 ├── templates/
 │   ├── error.html          # 404 error page template
 │   └── shorten_url.html    # Home page template
 └── url_shortener.db        # SQLite database (generated automatically)
 ```
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 

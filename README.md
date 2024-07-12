@@ -26,7 +26,7 @@ This project is a simple URL shortener service built using Flask, Flask-SocketIO
 
    ```bash
    git clone https://github.com/NXR8/URL-Shortener.git
-   cd url-shortener
+   cd URL-Shortener
    ```
 
 2. **Install the required packages:**
